@@ -1,0 +1,237 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#f7f7f5" />
+    <meta
+      name="description"
+      content="A guided study prompt that turns learning goals into visual mind maps."
+    />
+    <link
+      rel="icon"
+      type="image/svg+xml"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cpath fill='none' stroke='%23181818' stroke-width='7' stroke-linecap='round' stroke-linejoin='round' d='M12 33C12 18 23 10 38 11c13 1 20 10 17 21-3 12-17 21-31 20C16 51 11 43 12 33Z'/%3E%3Ccircle cx='25' cy='32' r='4' fill='%23181818'/%3E%3Ccircle cx='33' cy='40' r='5' fill='%23181818'/%3E%3C/svg%3E"
+    />
+    <title>stoodu</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <main class="app-shell" id="app">
+      <section class="prompt-view" id="promptView" aria-label="Study prompt builder">
+        <div class="brand-lockup" aria-label="stoodu">
+          <img class="brand-mark brand-open" src="./logo-transparent.png" alt="" />
+          <img class="brand-mark brand-closed" src="./logo-closed-transparent.png" alt="" aria-hidden="true" />
+        </div>
+
+        <div class="prompt-wrap">
+          <div class="prompt-card" id="promptCard">
+            <button class="icon-button attach-button" id="attachButton" type="button" aria-label="Add attachments">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M12 5v14M5 12h14" />
+              </svg>
+            </button>
+
+            <div
+              class="composer"
+              id="composer"
+              aria-label="Describe what you want to learn"
+              aria-multiline="true"
+            ></div>
+
+            <button class="submit-button" id="submitButton" type="button" aria-label="Build study map">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M12 19V5M6.5 10.5 12 5l5.5 5.5" />
+              </svg>
+            </button>
+          </div>
+
+          <div class="prompt-hint" aria-live="polite">
+            <span><kbd>Tab</kbd> to cycle suggestions</span>
+            <span class="hint-divider" aria-hidden="true"></span>
+            <span><kbd>Enter</kbd> <span id="enterHint">to continue</span></span>
+          </div>
+        </div>
+
+        <div class="profile-anchor">
+          <button class="profile-button" type="button" aria-label="Open profile menu" aria-haspopup="menu">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <circle cx="12" cy="8" r="3.2" />
+              <path d="M5.8 19c.6-3.6 2.7-5.4 6.2-5.4s5.6 1.8 6.2 5.4" />
+            </svg>
+          </button>
+          <div class="profile-menu" role="menu" aria-label="Profile menu">
+            <div class="profile-label">Guest learner</div>
+            <button type="button" role="menuitem">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M12 3v2.2M12 18.8V21M3 12h2.2M18.8 12H21M5.6 5.6l1.6 1.6M16.8 16.8l1.6 1.6M18.4 5.6l-1.6 1.6M7.2 16.8l-1.6 1.6"/></svg>
+              Preferences
+            </button>
+            <button type="button" role="menuitem">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 7V5H5v14h9v-2M10 12h10M17 9l3 3-3 3"/></svg>
+              Sign out
+            </button>
+          </div>
+        </div>
+
+        <div class="toast" id="toast" role="status" aria-live="polite">
+          <span class="toast-dot" aria-hidden="true"></span>
+          <span id="toastMessage">Attachments are coming soon</span>
+        </div>
+      </section>
+
+      <section class="loading-view" id="loadingView" aria-live="polite" aria-hidden="true">
+        <div class="map-loader" aria-hidden="true">
+          <svg class="doodle-map" viewBox="0 0 300 220" role="presentation">
+            <path class="doodle-connector path-one" d="M111 93 C92 76 78 65 59 59" />
+            <path class="doodle-connector path-two" d="M190 93 C211 74 225 64 238 58" />
+            <path class="doodle-connector path-three" d="M111 145 C91 157 77 168 65 173" />
+            <path class="doodle-connector path-four" d="M192 145 C214 153 227 162 236 167" />
+
+            <circle class="travel-dot dot-one" cx="84" cy="73" r="3.5" />
+            <circle class="travel-dot dot-two" cx="217" cy="72" r="3.5" />
+            <circle class="travel-dot dot-three" cx="84" cy="161" r="3.5" />
+            <circle class="travel-dot dot-four" cx="217" cy="158" r="3.5" />
+
+            <g class="doodle-node node-a">
+              <circle class="node-shell" cx="42" cy="50" r="18" />
+              <circle class="node-core" cx="42" cy="50" r="5" />
+            </g>
+            <g class="doodle-node node-b">
+              <circle class="node-shell" cx="254" cy="50" r="16" />
+              <path class="node-scribble" d="M247 50 q7-8 14 0 q-7 8-14 0Z" />
+            </g>
+            <g class="doodle-node node-c">
+              <circle class="node-shell" cx="48" cy="174" r="15" />
+              <path class="node-scribble" d="M42 174 h12 M48 168 v12" />
+            </g>
+            <g class="doodle-node node-d">
+              <circle class="node-shell" cx="252" cy="169" r="20" />
+              <circle class="node-core" cx="252" cy="169" r="5" />
+              <circle class="node-mini" cx="260" cy="161" r="2.5" />
+            </g>
+
+            <image class="loader-logo-svg" href="./logo-transparent.png" x="95" y="75" width="110" height="88" />
+
+            <path class="doodle-spark spark-one" d="M84 29 v12 M78 35 h12" />
+            <path class="doodle-spark spark-two" d="M218 185 l7 7 M225 185 l-7 7" />
+          </svg>
+        </div>
+        <h1>Building your study map<span class="loading-dots" aria-hidden="true"></span></h1>
+        <p>Connecting the ideas that matter most.</p>
+      </section>
+
+      <section class="mindmap-view" id="mindmapView" aria-label="University Calculus study map" aria-hidden="true">
+        <header class="map-toolbar">
+          <button class="map-brand" id="mapHomeButton" type="button" aria-label="Return to prompt">
+            <img src="./logo-transparent.png" alt="" />
+          </button>
+          <div class="map-title-group">
+            <span class="map-eyebrow">Study map</span>
+            <h1>University Calculus</h1>
+          </div>
+          <div class="map-progress" aria-label="Map progress">
+            <span id="topicCount">17 topics</span>
+            <i aria-hidden="true"></i>
+            <span>Explore freely</span>
+          </div>
+        </header>
+
+        <div class="mindmap-canvas" id="mindmapCanvas" tabindex="0" aria-label="Interactive calculus mind map. Drag to pan and scroll to zoom.">
+          <div class="mindmap-world" id="mindmapWorld">
+            <svg class="mindmap-edges" id="mindmapEdges" viewBox="0 0 1600 1000" aria-hidden="true"></svg>
+            <div class="mindmap-nodes" id="mindmapNodes"></div>
+          </div>
+        </div>
+
+        <div class="map-controls" aria-label="Map controls">
+          <button id="zoomOutButton" type="button" aria-label="Zoom out">−</button>
+          <button id="fitMapButton" class="fit-map-button" type="button" aria-label="Fit map to screen">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 3H3v5M16 3h5v5M8 21H3v-5M16 21h5v-5"/></svg>
+          </button>
+          <button id="zoomInButton" type="button" aria-label="Zoom in">+</button>
+        </div>
+
+        <div class="map-help" aria-hidden="true">
+          <span>Drag to pan</span><i></i><span>Scroll to zoom</span><i></i><span>Option for summaries</span><i></i><span>Right-click to collapse</span>
+        </div>
+
+        <aside class="notes-panel" id="notesPanel" aria-hidden="true" aria-label="Topic notes">
+          <div class="notes-panel-inner">
+            <header class="notes-header">
+              <div>
+                <span class="notes-kicker">Topic notes</span>
+                <div class="notes-breadcrumb" id="notesBreadcrumb"></div>
+              </div>
+              <button class="notes-close" id="notesCloseButton" type="button" aria-label="Close notes">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m7 7 10 10M17 7 7 17"/></svg>
+              </button>
+            </header>
+            <div class="notes-body">
+              <div class="notes-meta-row">
+                <div class="notes-index" id="notesIndex">01</div>
+                <div class="notes-score" id="notesScore" hidden></div>
+              </div>
+              <h2 id="notesTitle"></h2>
+              <p class="notes-summary" id="notesSummary"></p>
+
+              <button class="generate-branches-button" id="generateBranchesButton" type="button">
+                <span class="generate-icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24"><path d="M12 3v4M12 17v4M3 12h4M17 12h4M5.6 5.6l2.8 2.8M15.6 15.6l2.8 2.8M18.4 5.6l-2.8 2.8M8.4 15.6l-2.8 2.8"/><circle cx="12" cy="12" r="2.5"/></svg>
+                </span>
+                <span class="generate-copy">
+                  <strong>Generate more branches</strong>
+                  <small>Expand this topic with AI</small>
+                </span>
+                <span class="generate-dots" aria-hidden="true"><i></i><i></i><i></i></span>
+              </button>
+
+              <button class="branch-toggle-button" id="branchToggleButton" type="button" hidden>
+                <span class="branch-toggle-icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24">
+                    <path class="branch-symbol-tree" d="M4.5 6.5v11M4.5 8.5h4M4.5 15.5h4"/>
+                    <circle cx="15" cy="12" r="5.5"/>
+                    <path d="M12.5 12h5"/>
+                    <path class="branch-symbol-vertical" d="M15 9.5v5"/>
+                  </svg>
+                </span>
+                <span>
+                  <strong>Collapse branch</strong>
+                  <small>Hide its subtopics without deleting them</small>
+                </span>
+              </button>
+
+              <section class="notes-section">
+                <h3>Key ideas</h3>
+                <ul id="notesKeyIdeas"></ul>
+              </section>
+
+              <section class="formula-card">
+                <span>Keep in mind</span>
+                <div id="notesFormula"></div>
+              </section>
+
+              <section class="study-prompt-card">
+                <span>Try this</span>
+                <p id="notesPrompt"></p>
+              </section>
+
+              <section class="quiz-section" id="quizSection" aria-labelledby="quizSectionTitle">
+                <div class="quiz-section-heading">
+                  <div>
+                    <span class="quiz-kicker">Knowledge check</span>
+                    <h3 id="quizSectionTitle">Test your understanding</h3>
+                  </div>
+                  <span class="quiz-length" id="quizLength"></span>
+                </div>
+                <div class="quiz-content" id="quizContent"></div>
+              </section>
+            </div>
+          </div>
+        </aside>
+      </section>
+    </main>
+
+    <script src="./quiz-data.js" defer></script>
+    <script src="./app.js" defer></script>
+  </body>
+</html>
